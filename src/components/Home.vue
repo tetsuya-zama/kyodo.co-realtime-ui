@@ -4,9 +4,22 @@
             ようこそ{{logonUser.name}}さん
         </div>
         <div v-if='userSetting.geolocationEnabled'>
-            <pre>
-              {{JSON.stringify(userLocation, null, "  ")}}
-            </pre>
+            <div v-if='location'>
+              <dl>
+                <dt>緯度</dt>
+                <dd>{{location.coords.latitude}}</dd>
+                <dt>経度</dt>
+                <dd>{{location.coords.longitude}}</dd>
+                <dt>時刻</dt>
+                <dd>{{location.timestamp}}</dd>
+              </dl>
+            </div>
+            <div v-else>
+              位置情報取得中...
+            </div>
+        </div>
+        <div v-else>
+          位置情報共有停止中
         </div>
         <div>
             <input type='checkbox' id='geolocation-enabled' v-on:change='geoEnabledChange' v-bind:checked='userSetting.geolocationEnabled' />
@@ -46,8 +59,16 @@ export default {
     },
     geoEnabledChange (event) {
       const val = event.target.checked
-      console.dir(event.target)
       this.bus.$emit(USERSETTING.SET_SETTING, 'geolocationEnabled', val)
+    }
+  },
+  computed: {
+    location () {
+      if (!this.userLocation) {
+        return null
+      }
+      const timestampDate = new Date(this.userLocation.timestamp).toLocaleString()
+      return Object.assign({}, this.userLocation, {timestamp: timestampDate})
     }
   }
 }
