@@ -6,8 +6,6 @@ import router from './router'
 
 Vue.config.productionTip = false
 
-console.log(process.env.NODE_ENV)
-console.log('serviceWorker' in window.navigator)
 if (process.env.NODE_ENV === 'production') {
   if ('serviceWorker' in window.navigator) {
     window.addEventListener('load', () => {
