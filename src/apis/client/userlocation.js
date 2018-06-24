@@ -1,5 +1,6 @@
 import USERLOCATION from '@/events/userlocation'
 import USERSETTING from '@/events/usersetting'
+import USER from '@/events/user'
 
 const GEOLOCATION_OPTION = {
   'enableHighAccuracy': true,
@@ -21,6 +22,7 @@ class UserLocationAPI {
     this._setGeolocationEnabled(geolocationEnabled)
 
     this.bus.$on(USERSETTING.CHANGED, setting => this._setGeolocationEnabled(setting.geolocationEnabled))
+    this.bus.$on(USER.LOGOUT, () => this._clearWatchLocation())
   }
 
   _setGeolocationEnabled (geolocationEnabled) {
@@ -46,7 +48,7 @@ class UserLocationAPI {
   _watchLocation () {
     this.watchId = window.navigator.geolocation.watchPosition(
       position => this._onLocationSuccess(position),
-      error => this._onLocationError(error),
+      error => this._onLocationFailure(error),
       GEOLOCATION_OPTION
     )
   }

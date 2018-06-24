@@ -1,4 +1,5 @@
 import USERSETTING from '@/events/usersetting'
+import USER from '@/events/user'
 
 const DEFAULT_USER_SETTING = {
   geolocationEnabled: false
@@ -29,6 +30,7 @@ class UserSettingAPI {
 
     this._loadSetting()
     this.bus.$on(USERSETTING.SET_SETTING, (key, value) => this.setSetting(key, value))
+    this.bus.$on(USER.LOGIN, user => this.reload(userid))
   }
 
   reload (userid) {
