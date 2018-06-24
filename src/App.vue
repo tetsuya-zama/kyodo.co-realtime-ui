@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <router-view :bus='bus' :logon-user='logonUser' :user-setting='userSetting' />
+    <v-app>
+      <HeaderToolbar :bus='bus' :logon-user='logonUser' />
+      <v-content>
+        <router-view :bus='bus' :logon-user='logonUser' :user-setting='userSetting' />
+      </v-content>
+    </v-app>
   </div>
 </template>
 
@@ -9,11 +14,13 @@ import Vue from 'vue'
 import {loadUserAPI} from '@/apis/server/user'
 import USER from '@/events/user'
 import USERSETTING from '@/events/usersetting'
+import HeaderToolbar from '@/components/HeaderToolbar'
 
 const bus = new Vue()
 
 export default {
   name: 'App',
+  components: {HeaderToolbar},
   data () {
     return {
       bus: bus,
