@@ -12,6 +12,7 @@
 <script>
 import Vue from 'vue'
 import {loadUserAPI} from '@/apis/server/user'
+import {loadPositionAPI} from '@/apis/server/position'
 import USER from '@/events/user'
 import USERSETTING from '@/events/usersetting'
 import HeaderToolbar from '@/components/HeaderToolbar'
@@ -42,6 +43,7 @@ export default {
       this.userSetting = setting
       return true
     })
+    loadPositionAPI(bus)
     loadUserAPI(bus)
   }
 }

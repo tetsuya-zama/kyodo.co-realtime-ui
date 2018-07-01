@@ -5,6 +5,7 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'mdi/css/materialdesignicons.min.css'
+import * as VueGoogleMaps from 'vue2-google-maps'
 import App from './App'
 import router from './router'
 
@@ -22,9 +23,15 @@ if (process.env.NODE_ENV === 'production') {
   }
 }
 
-Vue.use(Vuetify)
-
 /* eslint-disable no-new */
+Vue.use(Vuetify)
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: process.env.GOOGLEMAP_API_KEY,
+    libraries: 'places'
+  }
+})
+
 new Vue({
   el: '#app',
   router,
