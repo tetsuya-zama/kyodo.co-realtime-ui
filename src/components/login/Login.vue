@@ -29,6 +29,11 @@
         <v-btn block color="secondary" @click="tryLogin" dark>Login</v-btn>
       </v-flex>
     </v-layout>
+    <v-layout row>
+      <v-flex xs12>
+        <v-btn block outline color="indigo" @click="$router.replace('/signup')">新規ユーザー登録</v-btn>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 

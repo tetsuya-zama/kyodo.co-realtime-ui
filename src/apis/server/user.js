@@ -24,6 +24,7 @@ class UserAPI {
     this.bus = bus
     this.bus.$on(USER.TRY_LOGIN, (id, pass) => this.login(id, pass))
     this.bus.$on(USER.TRY_LOGOUT, () => this.logout())
+    this.bus.$on(USER.TRY_SIGNUP, newUser => this.signup(newUser))
 
     if (logonCache) {
       this.currentUser = logonCache
@@ -46,5 +47,11 @@ class UserAPI {
   logout () {
     this.currentUser = null
     this.bus.$emit(USER.LOGOUT)
+  }
+
+  signup (newUser) {
+    // Dummy Logic
+    loadUserSettingAPI(this.bus, newUser.id)
+    this.bus.$emit(USER.LOGIN, Object.assign({}, newUser, {token: 'dummyToken'}))
   }
 }
