@@ -58,7 +58,7 @@
 import USERSETTING from '@/events/usersetting'
 
 export default {
-  name: 'Home',
+  name: 'MyLocation',
   props: ['bus', 'userLocation', 'userSetting'],
   methods: {
     geoEnabledChange (val) {
