@@ -29,7 +29,11 @@ export default {
     }
   },
   created () {
-    this.bus.$on(USER.LOGOUT, () => this.$router.replace('/login'))
+    this.bus.$on(USER.LOGOUT, () => {
+      this.logonUser = null
+      this.userSetting = null
+      this.$router.replace('/login')
+    })
     this.bus.$on(USER.LOGIN, user => {
       this.logonUser = user
       this.$router.replace('/home')
