@@ -52,7 +52,7 @@ class UserAPI {
     if (this.currentUser) {
       axios.delete(process.env.ENDPOINT_BASE_URL + '/auth', {
         headers: {
-          Authorization: 'Bearer' + this.currentUser.token
+          Authorization: 'Bearer ' + this.currentUser.token
         }
       }).then(response => {
         this.currentUser = null
