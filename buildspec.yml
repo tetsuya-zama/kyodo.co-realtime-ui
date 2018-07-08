@@ -14,5 +14,5 @@ phases:
   post_build:
     commands:
       - cwd=`dirname "$0"`
-      - aws s3 cp ${cwd}/dist s3://${TRAGET_BUCKET} --recursive --force
+      - aws s3 cp ${cwd}/dist s3://${TARGET_BUCKET} --recursive --force
     
