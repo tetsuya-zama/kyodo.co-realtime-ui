@@ -14,4 +14,3 @@ phases:
   post_build:
     commands:
       - aws s3 cp ./dist s3://${TARGET_BUCKET} --recursive --force
-    
