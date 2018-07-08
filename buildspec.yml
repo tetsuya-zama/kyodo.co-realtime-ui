@@ -13,6 +13,6 @@ phases:
       - npm run build
   post_build:
     commands:
-      - cwd=`dirname "$0"`
-      - aws s3 cp ./dist s3://kyodo.co-rt --recursive --force
+      - echo ${TARGET_BUCKET}
+      - aws s3 cp ./dist s3://${TARGET_BUCKET} --recursive --force
     
