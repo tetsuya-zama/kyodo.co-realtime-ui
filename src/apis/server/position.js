@@ -11,7 +11,9 @@ export function loadPositionAPI (bus) {
   })
 
   bus.$on(USER.LOGOUT, () => {
-    _instance.endPolling()
+    if (_instance) {
+      _instance.endPolling()
+    }
     _instance = null
   })
 

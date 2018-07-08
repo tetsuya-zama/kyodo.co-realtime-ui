@@ -30,7 +30,7 @@ class UserSettingAPI {
 
     this._loadSetting()
     this.bus.$on(USERSETTING.SET_SETTING, (key, value) => this.setSetting(key, value))
-    this.bus.$on(USER.LOGIN, user => this.reload(userid))
+    this.bus.$on(USER.LOGIN, user => this.reload(user.userId))
   }
 
   reload (userid) {

@@ -1,3 +1,4 @@
+import USER from '@/events/user'
 const LOGON_CACHE_STORAGE_KEY = 'logoncache'
 
 let _instance = null
@@ -21,8 +22,8 @@ class LogonCacheAPI {
     this.bus = bus
     this.storage = window.localStorage
 
-    this.bus.$on('user.login', userdata => this.setCache(userdata))
-    this.bus.$on('user.logout', () => this.removeCache())
+    this.bus.$on(USER.LOGIN, userdata => this.setCache(userdata))
+    this.bus.$on(USER.LOGOUT, () => this.removeCache())
   }
 
   setCache (userdata) {

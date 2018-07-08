@@ -1,5 +1,8 @@
 <template>
   <v-container fluid>
+    <v-alert :value="errorMessage != ''" color="error" icon="mdi-alert">
+      {{errorMessage}}
+    </v-alert>
     <v-form v-model="valid">
       <v-layout row>
         <v-flex xs12>
@@ -20,6 +23,17 @@
             label="Name"
             v-model="username"
             :rules="usernameRules"
+          ></v-text-field>
+        </v-flex>
+      </v-layout>
+      <v-layout row>
+        <v-flex xs12>
+          <v-text-field
+            id="mobile"
+            name="mobile"
+            label="携帯電話番号"
+            v-model="mobile"
+            :rules="mobileRules"
           ></v-text-field>
         </v-flex>
       </v-layout>
@@ -78,6 +92,11 @@ export default{
       usernameRules: [
         v => !!v || 'usernameは必須です'
       ],
+      mobile: '',
+      mobileRules: [
+        v => !!v || '携帯電話番号は必須です',
+        v => /^[0-9]*$/.test(v) || '携帯電話番号はハイフンなしの半角数字で入力してください。'
+      ],
       password: '',
       passwordRules: [
         v => !!v || 'passwordは必須です',
@@ -88,16 +107,23 @@ export default{
         v => !!v || 'password(confirm)は必須です',
         v => v === this.password || 'passwordとpassword(confirm)が一致しません'
       ],
-      valid: false
+      valid: false,
+      errorMessage: ''
     }
+  },
+  created: function () {
+    this.bus.$on(USER.SIGNUP_FAILURE, () => {
+      this.errorMessage = '登録に失敗しました。IDが重複しています。'
+    })
   },
   methods: {
     onSignUpClick: function () {
       if (this.valid) {
         this.bus.$emit(USER.TRY_SIGNUP, {
-          id: this.userid,
+          userId: this.userid,
           name: this.username,
-          password: this.password
+          password: this.password,
+          mobile: this.mobile
         })
       }
     }
