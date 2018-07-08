@@ -17,8 +17,17 @@ import USER from '@/events/user'
 import USERSETTING from '@/events/usersetting'
 import HeaderToolbar from '@/components/HeaderToolbar'
 
+/**
+ * Event Busの作成
+ */
 const bus = new Vue()
 
+/**
+ * App Component
+ * @state {VueInstance} bus Event Bus
+ * @state {Object} logonUser ログイン中のユーザー情報
+ * @state {Object} userSetting ログイン中ユーザーの設定値
+ */
 export default {
   name: 'App',
   components: {HeaderToolbar},
@@ -30,20 +39,25 @@ export default {
     }
   },
   created () {
+    // ログアウトイベントのハンドリング
     this.bus.$on(USER.LOGOUT, () => {
       this.logonUser = null
       this.userSetting = null
       this.$router.replace('/login')
     })
+    // ログインイベントのハンドリング
     this.bus.$on(USER.LOGIN, user => {
       this.logonUser = user
       this.$router.replace('/home')
     })
+    // ユーザー設定値変更イベントのハンドリング
     this.bus.$on(USERSETTING.CHANGED, setting => {
       this.userSetting = setting
       return true
     })
+    // 位置情報APIの初期化
     loadPositionAPI(bus)
+    // ユーザーAPIの初期化
     loadUserAPI(bus)
   }
 }

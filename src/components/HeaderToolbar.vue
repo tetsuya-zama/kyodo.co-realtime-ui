@@ -22,9 +22,19 @@
 <script>
 import USER from '@/events/user'
 
+/**
+ * HeaderToolbar Component
+ * 画面のヘッダ
+ * @see https://vuetifyjs.com/ja/components/toolbars
+ * @prop {VueInstance} bus Event Bus
+ * @prop {Object} logonUser ログイン中のユーザー
+ */
 export default {
   name: 'HeaderToolbar',
   props: ['bus', 'logonUser'],
+  /**
+   * ヘッダメニュー内のログアウトボタン押下時のイベントハンドラ
+   */
   methods: {
     onLogoutClick: function () {
       this.bus.$emit(USER.TRY_LOGOUT)

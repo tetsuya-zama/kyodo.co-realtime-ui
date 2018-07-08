@@ -9,8 +9,19 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import App from './App'
 import router from './router'
 
+/**
+ * メイン処理
+ * ここでは環境の設定をしているだけ
+ * APのメイン処理はApp.vueを参照
+ */
+
 Vue.config.productionTip = false
 
+/**
+ * Service Workerの登録処理
+ * これが無いとPWAの要件を満たさない
+ * sw.jsはworkbox-swというツールでビルド時に作成している
+ */
 if (process.env.NODE_ENV === 'production') {
   if ('serviceWorker' in window.navigator) {
     window.addEventListener('load', () => {
@@ -24,14 +35,18 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 /* eslint-disable no-new */
+// Vuetify(UI Framework)のロード
+// @see https://vuetifyjs.com/ja
 Vue.use(Vuetify)
+// VueGoogleMapsのロード
+// @see https://github.com/Akryum/vue-googlemaps
 Vue.use(VueGoogleMaps, {
   load: {
     key: process.env.GOOGLEMAP_API_KEY,
     libraries: 'places'
   }
 })
-
+// App Componentのバインド
 new Vue({
   el: '#app',
   router,

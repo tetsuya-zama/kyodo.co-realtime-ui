@@ -5,8 +5,14 @@ import Login from '@/components/login/Login'
 import Home from '@/components/home/Home'
 import SignUp from '@/components/signup/SignUp'
 
+/**
+ *  Vue-Routerのロード
+ */
 Vue.use(Router)
 
+/**
+ *  Vue-Routerの設定
+ */
 export default new Router({
   routes: [
     {

@@ -5,9 +5,14 @@ import axios from 'axios'
 
 let _instance = null
 
+/**
+ * UserAPIの初期化
+ * @param {VueInstance} bus Event Bus
+ */
 export function loadUserAPI (bus) {
   loadLogonCacheAPI(bus)
 
+  // Singleton Pattern
   if (_instance == null) {
     const logonCacheAPI = getLogonCacheAPI()
     const logonCache = logonCacheAPI.getCache()
@@ -20,20 +25,38 @@ export function loadUserAPI (bus) {
   }
 }
 
+/**
+ * UserAPI
+ * ユーザーに関するサーバサイドAPIと接続するためのAPI
+ */
 class UserAPI {
+  /**
+   * コンストラクタ
+   * @param {VueInstance} bus Event Bus
+   * @param {Object} logonCache ログインユーザーのキャッシュ
+   */
   constructor (bus, logonCache) {
     this.bus = bus
+    // ログイン要求イベントのハンドリング
     this.bus.$on(USER.TRY_LOGIN, (id, pass) => this.login(id, pass))
+    // ログアウト要求イベントのハンドリング
     this.bus.$on(USER.TRY_LOGOUT, () => this.logout())
+    // サインアップ要求イベントのハンドリング
     this.bus.$on(USER.TRY_SIGNUP, newUser => this.signup(newUser))
 
+    // javascriptではコンストラクタのoverloadができないため
+    // パラメータの有無で初期化の方針を判断する
     if (logonCache) {
       this.currentUser = logonCache
       loadUserSettingAPI(this.bus, this.currentUser.userId)
       this.bus.$emit(USER.LOGIN, this.currentUser)
     }
   }
-
+  /**
+   * ログイン処理
+   * @param {String} id 入力されたユーザーID
+   * @param {String} pass 入力されたパスワード
+   */
   login (id, pass) {
     axios.post(process.env.ENDPOINT_BASE_URL + '/auth', {userId: id, password: pass})
       .then(response => {
@@ -48,6 +71,9 @@ class UserAPI {
       })
   }
 
+  /**
+   * ログアウト処理
+   */
   logout () {
     if (this.currentUser) {
       axios.delete(process.env.ENDPOINT_BASE_URL + '/auth', {
@@ -67,6 +93,10 @@ class UserAPI {
     }
   }
 
+  /**
+   * サインアップ処理
+   * @param {Object} newUser 入力されたユーザー情報
+   */
   signup (newUser) {
     axios.post(process.env.ENDPOINT_BASE_URL + '/user', newUser)
       .then(response => {

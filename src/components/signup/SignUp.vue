@@ -78,6 +78,24 @@
 <script>
 import USER from '@/events/user'
 
+/**
+ * SignUp Component
+ * ユーザー新規登録画面
+ * @see https://vuetifyjs.com/ja/components/forms
+ * @prop {VueInstance} bus Event Bus
+ * @state {String} userId ユーザーID(入力値)
+ * @state {Array} userIdRule ユーザーIDのバリデーションルール
+ * @state {String} username ユーザー名(入力値)
+ * @state {Array} usernameRules ユーザー名のバリデーションルール
+ * @state {String} mobile 携帯電話番号(入力値)
+ * @state {Array} mobileRule 携帯電話番号のバリデーションルール
+ * @state {String} password パスワード(入力値)
+ * @state {Array} passwordRule パスワードのバリデーションルール
+ * @state {String} passwordConfirm 確認用パスワード(入力値)
+ * @state {Array} passwordConfirmRules 確認用パスワードのバリデーションルール
+ * @state {Boolean} valid バリデーションが通っているかどうか
+ * @state {String} errorMessage 登録失敗時のエラーメッセージ
+ */
 export default{
   name: 'SignUp',
   props: ['bus'],
@@ -112,11 +130,15 @@ export default{
     }
   },
   created: function () {
+    // サインアップ失敗イベントのハンドリング
     this.bus.$on(USER.SIGNUP_FAILURE, () => {
       this.errorMessage = '登録に失敗しました。IDが重複しています。'
     })
   },
   methods: {
+    /**
+     * サインアップボタン押下時のイベントハンドラ
+     */
     onSignUpClick: function () {
       if (this.valid) {
         this.bus.$emit(USER.TRY_SIGNUP, {

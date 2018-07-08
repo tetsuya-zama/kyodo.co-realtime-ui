@@ -39,7 +39,14 @@
 
 <script>
 import USER from '@/events/user'
-
+/**
+ * Login Component
+ * ログイン画面
+ * @prop {VueInstance} bus Event Bus
+ * @state {String} userid ユーザーID(入力値)
+ * @state {String} password パスワード(入力値)
+ * @state {String} errorMessage ログイン失敗時のエラーメッセージ
+ */
 export default {
   name: 'Login',
   props: ['bus'],
@@ -51,12 +58,16 @@ export default {
     }
   },
   created () {
+    // ログイン失敗イベントのハンドリング
     this.bus.$on(USER.LOGIN_FAILURE, info => {
       this.errorMessage = 'ログインに失敗しました'
       return true
     })
   },
   methods: {
+    /**
+     * ログインボタン押下時のイベントハンドラ
+     */
     tryLogin () {
       this.bus.$emit(USER.TRY_LOGIN, this.userid, this.password)
     }

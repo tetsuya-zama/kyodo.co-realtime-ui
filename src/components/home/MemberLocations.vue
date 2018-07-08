@@ -39,6 +39,15 @@
 <script>
 import MEMBERLOCATIONS from '@/events/memberlocations'
 
+/**
+ * MemberLocation Component
+ * みんなの位置パネル
+ * @see https://github.com/Akryum/vue-googlemaps
+ * @prop {VueInstance} bus Event Bus
+ * @prop {Object} logonUser ログイン中のユーザー情報
+ * @prop {Object} userLocation ログオンユーザーの位置情報
+ * @state {Array} locations マップ上に表示すべき位置情報
+ */
 export default {
   name: 'MemberLocations',
   props: ['bus', 'logonUser', 'userLocation'],
@@ -48,6 +57,7 @@ export default {
     }
   },
   created: function () {
+    // みんなの位置情報更新イベントのハンドリング
     this.bus.$on(MEMBERLOCATIONS.UPDATED, locations => {
       this.locations = locations
       return true
@@ -55,12 +65,19 @@ export default {
     this.onRefresh()
   },
   methods: {
+    /**
+     * 更新アイコン押下時のイベントハンドラ
+     */
     onRefresh: function () {
       this.bus.$emit(MEMBERLOCATIONS.REFRESH)
     }
   },
   computed: {
+    /**
+     * 表示すべき位置情報の前処理
+     */
     allLocations: function () {
+      // TODO: サーバサイドAPIが未完成であるため暫定処理。完成したら直す。
       if (this.logonUser && this.userLocation) {
         const myLocation = {
           userid: this.logonUser.id,
