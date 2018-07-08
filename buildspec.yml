@@ -9,4 +9,7 @@ phases:
     - npm install
   build:
     - npm run build
+  post-build:
+    - cwd=`dirname "$0"`
+    - aws s3 cp ${cwd}/dist s3://${BUCKET_NAME} --recursive --force
     
