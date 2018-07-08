@@ -6,10 +6,13 @@ env:
 
 phases:
   install:
-    - npm install
+    commands:
+      - npm install
   build:
-    - npm run build
+    commands:
+      - npm run build
   post-build:
-    - cwd=`dirname "$0"`
-    - aws s3 cp ${cwd}/dist s3://${TRAGET_BUCKET} --recursive --force
+    commands:
+      - cwd=`dirname "$0"`
+      - aws s3 cp ${cwd}/dist s3://${TRAGET_BUCKET} --recursive --force
     
