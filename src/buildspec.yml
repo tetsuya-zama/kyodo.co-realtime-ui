@@ -1,0 +1,12 @@
+version: 0.2
+
+env:
+  parameter-store:
+    GOOGLEMAP_API_KEY: "GOOGLEMAP_API_KEY"
+
+phases:
+  install:
+    - npm install
+  build:
+    - npm run build
+    
