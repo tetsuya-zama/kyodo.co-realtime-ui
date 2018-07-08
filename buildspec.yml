@@ -13,6 +13,5 @@ phases:
       - npm run build
   post_build:
     commands:
-      - echo ${TARGET_BUCKET}
       - aws s3 cp ./dist s3://${TARGET_BUCKET} --recursive --force
     
