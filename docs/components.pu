@@ -1,0 +1,160 @@
+@startuml
+title map kyodo-co
+class App <<(C,lightgreen) Component>>{
+- @state bus: VueInstance
+- @state logonUser: Object
+- @state userSetting: Object
+ 
+}
+
+package router{
+   class Router<<(R,orchid) VueRooter>>{
+      - routes: Array
+   }
+}
+
+
+package components{
+   class HeaderToolbar<<(C,lightgreen) Component>>{
+      - @prop bus: VueInstance
+      - @prop logonUser: Object
+      ---
+      + onLogoutClick(): void
+   }
+   package home{
+      class Home<<(C,lightgreen) Component>>{
+        - @prop bus: VueInstance
+        - @prop logonUser: Object
+        - @prop userSetting: Object
+        - @state userLocation: Object
+      }
+      class MyLocation<<(C,lightgreen) Component>>{
+         - @prop bus: VueInstance
+         - @prop userLocation: Object
+         - @prop userSetting: Object
+         ----
+         + geoEnabledChange(val: Boolean): void
+         -  location(): Object
+      }
+      class  MemberLocations<<(C,lightgreen) Component>>{
+          - @prop bus: VueInstance
+          - @prop logonUser: Object
+          - @prop userLocation: Object
+          - @state locations: Array
+          ---
+          + onRefresh(): void
+          - allLocations():Array
+      }
+   }
+   package loading{
+      class Loading<<(C,lightgreen) Component>>{
+           - @prop bus: VueInstance
+      }
+   }
+   package login{
+      class Login<<(C,lightgreen) Component>>{
+          - @prop bus: VueInstance
+          + @state userid: String
+          + @state password: String
+          + @state errorMessage: String
+          --- 
+          + tryLogin(): void
+      }
+   }
+   package signup{
+       class SignUp<<(C,lightgreen) Component>>{
+         @prop bus: VueInstance
+         @state userid: String
+         @state useridRules: Array
+         @state username: String
+         @state usernameRules: Array
+         @state mobile: String
+         @state mobileRules: Array
+         @state password: String
+         @state passwordRules: Array
+         @state passwordConfirm: String
+         @state passwordConfirmRules: Array
+         @state valid: Boolean
+         @state errorMessage: String
+         ---
+         + onSignUpClick(): void
+      }
+   }
+}
+
+package apis{
+   package client{
+      class UserLocationAPI<<(A,pink) API>>{
+
+      }
+      package storage{
+         class LogonCacheAPI<<(A,pink) API>>{
+
+         }
+         class UserSettingAPI<<(A,pink) API>>{
+
+         }
+      }
+   }
+   package server{
+      class UserAPI<<(A,pink) API>>{
+
+      }
+      class PositionAPI<<(A,pink) API>>{
+
+      }
+   }
+}
+
+package events{
+   enum USER{
+      LOGIN
+      LOGOUT
+      TRY_LOGIN
+      TRY_LOGOUT
+      LOGIN_FAILURE
+      TRY_SIGNUP
+      SIGNUP_SUCCESS
+      SIGNUP_FAILURE
+   }
+   enum USERSETTING{
+     CHANGED
+     SET_SETTING
+   }
+   enum USERLOCATION{
+      CHANGED
+      ERROR
+   }
+   enum MEMBERLOCATIONS{
+      UPDATED
+      REFRESH
+   }
+}
+
+class EventBus<<(V,lightblue) VueInstance>>{
+
+}
+
+App .down.> HeaderToolbar
+App .down.> Router
+App ..> UserAPI : initialize
+App ..> PositionAPI : initialize
+App .down. EventBus
+
+Router .down.> Loading
+Router .down.> Login
+Router .down.> SignUp
+Router .down.> Home
+
+Home .down.> MyLocation
+Home .down.> MemberLocations
+Home ..> UserLocationAPI : initialize
+
+
+UserAPI ..> UserSettingAPI : initialize
+UserAPI ..> LogonCacheAPI : initialize
+
+components .. EventBus
+apis .right. EventBus
+events .up. EventBus
+@enduml
