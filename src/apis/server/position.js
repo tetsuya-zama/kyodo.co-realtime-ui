@@ -4,14 +4,21 @@ import MEMBERLOCATIONS from '@/events/memberlocations'
 import axios from 'axios'
 
 let _instance = null
-
+/**
+ * PositionAPIの初期化
+ * @param {VueInstance} bus Event Bus
+ */
 export function loadPositionAPI (bus) {
+  //Singleton Pattern
+  
+  // ユーザーログイン時
   bus.$on(USER.LOGIN, logonUser => {
     _instance = new PositionAPI(bus, logonUser)
     _instance.startPolling()
     _instance.updatePositions()
   })
 
+  // ユーザーログアウト時
   bus.$on(USER.LOGOUT, () => {
     if (_instance) {
       _instance.endPolling()
@@ -19,12 +26,14 @@ export function loadPositionAPI (bus) {
     _instance = null
   })
 
+  // みんなの位置情報の更新要求時
   bus.$on(MEMBERLOCATIONS.REFRESH, () => {
     if (_instance) {
       _instance.updatePositions()
     }
   })
 
+  // ユーザーの位置情報の変更時
   bus.$on(USERLOCATION.CHANGED, userLocation => {
     if (_instance) {
       _instance.sendUserLocation(userLocation)
@@ -32,13 +41,25 @@ export function loadPositionAPI (bus) {
   })
 }
 
+/**
+ * PositionAPI
+ * 位置情報に関するサーバサイドAPIへの接続をするためのAPI
+ */
 class PositionAPI {
+  /**
+   * コンストラクタ
+   * @param {VueInstance} bus Event Bus
+   * @param {Object} logonUser ログイン中のユーザー情報
+   */
   constructor (bus, logonUser) {
     this.bus = bus
     this.logonUser = logonUser
     this.timerId = null
   }
 
+  /**
+   * みんなの位置情報に対するPollingの開始
+   */
   startPolling () {
     this.timerId = setInterval(
       () => {
@@ -48,12 +69,18 @@ class PositionAPI {
     )
   }
 
+  /**
+   * みんなの位置情報に対するPollingの停止
+   */
   endPolling () {
     if (this.timerId) {
       clearInterval(this.timerId)
     }
   }
 
+  /**
+   * みんなの位置情報の再取得
+   */
   updatePositions () {
     axios.get(
       process.env.ENDPOINT_BASE_URL + '/position/all',
@@ -78,6 +105,9 @@ class PositionAPI {
     })
   }
 
+  /**
+   * 自分の位置情報の送信
+   */
   sendUserLocation (userLocation) {
     axios.post(
       process.env.ENDPOINT_BASE_URL + '/user/' + this.logonUser.userId + '/position',

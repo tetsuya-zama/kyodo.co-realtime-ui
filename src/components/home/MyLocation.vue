@@ -57,19 +57,33 @@
 <script>
 import USERSETTING from '@/events/usersetting'
 
+/**
+ * MyLocation Component
+ * 自分の位置情報パネル
+ * @prop {VueInstance} bus Event Bus
+ * @prop {Object} userLocation ユーザーの位置情報
+ * @prop {Object} userSetting ユーザーの設定値
+ */
 export default {
   name: 'MyLocation',
   props: ['bus', 'userLocation', 'userSetting'],
   methods: {
+    /**
+     * 「位置情報を共有する」設定の切り替え時のイベントハンドラ
+     */
     geoEnabledChange (val) {
       this.bus.$emit(USERSETTING.SET_SETTING, 'geolocationEnabled', val)
     }
   },
   computed: {
+    /**
+     * 表示する位置情報の前処理
+     */
     location () {
       if (!this.userLocation) {
         return null
       }
+      // GeoLocationAPIのtimestampはUNIX TIMEで返ってくるので、表示用に文字列に変換
       const timestampDate = new Date(this.userLocation.timestamp).toLocaleString()
       return Object.assign({}, this.userLocation, {timestamp: timestampDate})
     }
