@@ -15,3 +15,5 @@ yarn-error.log*
 
 #deploy script
 deploy.sh
+# Plant UML Image
+docs/*.png
