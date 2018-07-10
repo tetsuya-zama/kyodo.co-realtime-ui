@@ -9,8 +9,8 @@ let _instance = null
  * @param {VueInstance} bus Event Bus
  */
 export function loadPositionAPI (bus) {
-  //Singleton Pattern
-  
+  // Singleton Pattern
+
   // ユーザーログイン時
   bus.$on(USER.LOGIN, logonUser => {
     _instance = new PositionAPI(bus, logonUser)
