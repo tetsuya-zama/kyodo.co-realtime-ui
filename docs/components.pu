@@ -85,23 +85,57 @@ package components{
 package apis{
    package client{
       class UserLocationAPI<<(A,pink) API>>{
-
+        - bus: VueInstance
+        - watchId: Number
+        - position: Object
+        ---
+        - _setGeolocationEnabled(geolocationEnabled: Boolean): void
+        - _getLocation(): void
+        - _watchLocation(): void
+        - _clearWatchLocation(): void
+        - _onLocationSuccess(locaton: Object): void
+        - _onLocationFailure(error: Object): void
       }
       package storage{
          class LogonCacheAPI<<(A,pink) API>>{
-
+          - bus: VueInstance
+          - storage: LocalStorage
+          ---
+          + setCache(userdata: Object): void
+          + getCache(): Object
+          + removeCache(): void
          }
          class UserSettingAPI<<(A,pink) API>>{
-
+          - bus: VueInstance
+          - userid: String
+          - settingKey: String
+          - storage: LocalStorage
+          - setting: Object
+          ---
+          + reload(userid: String): void
+          - _loadSetting(): void
+          + setSetting(key: String, value: String): void
          }
       }
    }
    package server{
       class UserAPI<<(A,pink) API>>{
-
+        - bus: VueInstance
+        - currentUser: Object
+        ---
+        + login(id: String, pass: String): void
+        + logout()
+        + signup(newUser: Object): void
       }
       class PositionAPI<<(A,pink) API>>{
-
+        - bus: VueInstance
+        - logonUser: Object
+        - timerId: Number
+        ---
+        + startPolling(): void
+        + endPolling(): void
+        + updatePositions(): void
+        + sendUserLocation(userLocation: Object): void
       }
    }
 }
