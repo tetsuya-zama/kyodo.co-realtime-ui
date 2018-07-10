@@ -11,6 +11,15 @@ package router{
    class Router<<(R,orchid) VueRooter>>{
       - routes: Array
    }
+   note as NoteRouter #pink
+   <b>重要</b>
+   URL(#/以降)の内容に従って、マウントするコンポーネントを切り替える。
+   ページ遷移用。
+   今回の設計では、HeaderToolbarは各URL共通のコンポーネントとし、
+   それ以外はURLごとに切り替えることとした。
+   end note
+   
+   Router .. NoteRouter
 }
 
 
@@ -168,6 +177,18 @@ package events{
 class EventBus<<(V,lightblue) VueInstance>>{
 
 }
+
+note as NoteEventBus#pink
+<b>重要</b>
+今回のEvent Busは、
+Component間のイベント送受信のみならず、
+Component - API間のイベント送受信も担当する。
+
+一部の例外は除き、APIには直接アクセスするのではなく、
+EventBusを経由してイベントでやりとりをすること。
+end note
+
+EventBus .. NoteEventBus
 
 App .down.> HeaderToolbar
 App .down.> Router
