@@ -2,20 +2,23 @@
 
 > kyodo-coのリアルタイム版
 
-## Build Setup
+## npmコマンド集
 
 ``` bash
-# install dependencies
+# 依存ライブラリのインストール
 npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
+# デバッグ用サーバの起動
+npm start
 
-# build for production with minification
+# eslintによるソースの静的チェック（今回は必須では無いこととします）
+npm run lint
+
+# docs/にある*.puファイル(PlantUMLファイル)をpng画像に変換
+npm run docs
+
+# 本番用ビルド（CodeBuildが行うので自分で行う必要はありません）
 npm run build
 
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
