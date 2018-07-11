@@ -80,7 +80,7 @@ export default {
       // TODO: サーバサイドAPIが未完成であるため暫定処理。完成したら直す。
       if (this.logonUser && this.userLocation) {
         const myLocation = {
-          userid: this.logonUser.id,
+          userId: this.logonUser.userId,
           name: this.logonUser.name,
           position: {
             lat: this.userLocation.coords.latitude,
@@ -89,7 +89,7 @@ export default {
           lastUpdate: new Date(this.userLocation.timestamp).toLocaleString()
         }
 
-        return [myLocation].concat(this.locations)
+        return [myLocation].concat(this.locations.filter(l => l.userId !== this.logonUser.userId))
       } else {
         return this.locations
       }

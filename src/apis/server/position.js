@@ -86,7 +86,7 @@ class PositionAPI {
       process.env.ENDPOINT_BASE_URL + '/position/all',
       {
         headers: {
-          Autorization: 'Bearer ' + this.logonUser.token
+          Authorization: 'Bearer ' + this.logonUser.token
         }
       }
     ).then(response => {
