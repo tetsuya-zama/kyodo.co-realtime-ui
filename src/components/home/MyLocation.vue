@@ -2,14 +2,13 @@
   <v-container fluid>
     <v-layout row>
       <v-flex xs12>
-        <v-card >
+        <v-card>
           <v-card-title>
             <div>
               <h3 class="headline mb-0">自分の位置情報</h3>
             </div>
           </v-card-title>
           <v-card-text>
-            
             <!--2018/7/11 Taiko:表示領域が邪魔だったので変更-->
             <v-card v-if='userSetting.geolocationEnabled && location'>
               <v-card-actions >
@@ -29,16 +28,13 @@
               <v-card-title>
                 <span>{{selectedItemsValue}}</span>
               </v-card-title>
-
             </v-card>
-            
-            
-              <v-alert :value="userSetting.geolocationEnabled && !location" color="info" icon="mdi-clock-alert">
-                位置情報取得中
-              </v-alert>
-              <v-alert :value="!userSetting.geolocationEnabled" color="warning" icon="mdi-alert">
-                位置情報共有停止中
-              </v-alert>
+            <v-alert :value="userSetting.geolocationEnabled && !location" color="info" icon="mdi-clock-alert">
+              位置情報取得中
+            </v-alert>
+            <v-alert :value="!userSetting.geolocationEnabled" color="warning" icon="mdi-alert">
+              位置情報共有停止中
+            </v-alert>
           </v-card-text>
           <v-card-actions>
             <v-switch label="位置情報を共有する" @change="geoEnabledChange" v-model="userSetting.geolocationEnabled"/>
@@ -62,9 +58,9 @@ import USERSETTING from '@/events/usersetting'
 export default {
   name: 'MyLocation',
   props: ['bus', 'userLocation', 'userSetting'],
-  //コンポーネント内のローカル変数
+  // コンポーネント内のローカル変数
   data: function () {
-          return {selectedItemsValue :''}
+    return { selectedItemsValue: '' }
   },
   methods: {
     /**
@@ -87,6 +83,5 @@ export default {
       return Object.assign({}, this.userLocation, {timestamp: timestampDate})
     }
   }
-     
 }
 </script>
