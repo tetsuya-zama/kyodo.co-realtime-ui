@@ -123,8 +123,10 @@ const webpackConfig = merge(baseWebpackConfig, {
       globDirectory: config.build.assetsSubDirectory,
       globPatterns: [
         'js/*.js',
-        'css*.css'
+        'css/*.css'
       ],
+      clientsClaim: true,
+      skipWaiting: true,
       swDest: config.build.assetsRoot + '/sw.js',
     })
   ]
