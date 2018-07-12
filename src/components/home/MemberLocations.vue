@@ -16,7 +16,8 @@
               map-type-id="roadmap"
               style="width: auto; height: 300px"
             >
-              <!-- 自分のアイコン（indexの番号が0のとき）を青色、他を赤色（デフォルト）にする -->
+              <!-- 自分のアイコン（indexの番号が0のとき）を青色、他を赤色（デフォルト）にする 
+                    FIXME やっぱりindexの番号が0のとき自分である、という判定方法は間違っているかもしれないので修正が必要-->
               <GmapMarker
                 v-for="(location, index) in allLocations"
                 v-if="index === 0"
