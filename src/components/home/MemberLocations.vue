@@ -13,12 +13,24 @@
               v-if="allLocations.length > 0"
               :center="allLocations[0].position"
               :zoom="9"
-              map-type-id="terrain"
+              map-type-id="roadmap"
               style="width: auto; height: 300px"
             >
+              <!-- 自分のアイコン（indexの番号が0のとき）を青色、他を赤色（デフォルト）にする -->
               <GmapMarker
-                :key="index"
                 v-for="(location, index) in allLocations"
+                v-if="index === 0"
+                :key="index"
+                :position="location.position"
+                :title="location.name + '(' + location.lastUpdate + ')'"
+                :label="location.name.substr(0,1)"
+                :icon='{scaledSize:{height:50,width:50},url:"https://maps.google.com/mapfiles/ms/icons/blue.png"} '
+                :clickable="true"
+                :draggable="false"
+              />
+              <GmapMarker
+                v-else
+                :key="index"
                 :position="location.position"
                 :title="location.name + '(' + location.lastUpdate + ')'"
                 :label="location.name.substr(0,1)"
