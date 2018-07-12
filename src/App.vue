@@ -21,7 +21,6 @@ import {loadPositionAPI} from '@/apis/server/position'
 import USER from '@/events/user'
 import USERSETTING from '@/events/usersetting'
 import HeaderToolbar from '@/components/HeaderToolbar'
-import Footer from '@/components/Footer'
 
 /**
  * Event Busの作成
@@ -36,7 +35,7 @@ const bus = new Vue()
  */
 export default {
   name: 'App',
-  components: {HeaderToolbar,Footer},
+  components: {HeaderToolbar},
   data () {
     return {
       bus: bus,
