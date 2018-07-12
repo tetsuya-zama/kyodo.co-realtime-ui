@@ -9,7 +9,7 @@
     </v-app>
     <v-footer class="pa-3" light=true>
       <v-spacer></v-spacer>
-      <div> Copyright &copy; {{ new Date().getFullYear() }} NRI System Techno, Ltd. All rights reserved.</div>
+      <div> Copyright &copy; {{(new Date()).toLocaleString()}} NRI System Techno, Ltd. All rights reserved.</div>
     </v-footer>
   </div>
 </template>
