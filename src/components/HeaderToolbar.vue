@@ -45,7 +45,7 @@ export default {
     onLogoutClick: function () {
       this.bus.$emit(USER.TRY_LOGOUT)
     },
-     onUnsubscribeClick: function () {
+    onUnsubscribeClick: function () {
       this.bus.$emit(USER.TRY_DELETE)
     }
   }
