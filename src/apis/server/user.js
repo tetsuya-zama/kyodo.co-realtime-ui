@@ -104,6 +104,7 @@ class UserAPI {
       .then(response => {
         if (response.status === 200) {
           this.bus.$emit(USER.SIGNUP_SUCCESS)
+          this.currentUser = Object.assign({}, response.data, {userId: newUser.userId})
           loadUserSettingAPI(this.bus, newUser.userId)
           this.bus.$emit(USER.LOGIN, Object.assign(
             {},
