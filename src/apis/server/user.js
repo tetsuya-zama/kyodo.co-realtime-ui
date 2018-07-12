@@ -64,6 +64,7 @@ class UserAPI {
       .then(response => {
         if (response.status === 200) {
           this.currentUser = Object.assign({}, response.data, {userId: id, password: pass})
+          console.log(this.currentUser)
           loadUserSettingAPI(this.bus, this.currentUser.userId)
           this.bus.$emit(USER.LOGIN, this.currentUser)
         }
@@ -104,6 +105,8 @@ class UserAPI {
       .then(response => {
         if (response.status === 200) {
           this.bus.$emit(USER.SIGNUP_SUCCESS)
+          this.currentUser = Object.assign({}, response.data, {userId: newUser.userId})
+          console.log(this.currentUser)
           loadUserSettingAPI(this.bus, newUser.userId)
           this.bus.$emit(USER.LOGIN, Object.assign(
             {},
