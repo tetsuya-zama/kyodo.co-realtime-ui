@@ -39,27 +39,36 @@
         </v-flex>
       </v-layout>
       <v-layout row>
-        <v-flex xs12>
+        <v-flex xs10>
           <v-text-field
             id="password"
             name="password"
             label="password"
-            type="password"
+            :type= "passwordType"
             v-model="password"
             :rules="passwordRules"
           ></v-text-field>
         </v-flex>
+        <v-flex>
+          <v-btn icon @click="onPasswordIconClick">
+            <v-icon>{{passwordIcon}}</v-icon>
+          </v-btn>         
+        </v-flex>
       </v-layout>
       <v-layout row>
-        <v-flex xs12>
+        <v-flex xs10>
           <v-text-field
             id="passwordConfirm"
             name="passwordConfirm"
             label="password(confirm)"
-            type="password"
+            :type="passwordType"
             v-model="passwordConfirm"
             :rules="passwordConfirmRules"
           ></v-text-field>
+        </v-flex>
+            <v-btn icon @click="onPasswordIconClick">
+            <v-icon>{{passwordIcon}}</v-icon>
+          </v-btn>
         </v-flex>
       </v-layout>
       <v-layout row>
@@ -131,7 +140,8 @@ export default{
         v => v === this.password || 'passwordとpassword(confirm)が一致しません'
       ],
       valid: false,
-      errorMessage: ''
+      errorMessage: '',
+      passwordVisible : false
     }
   },
   created: function () {
@@ -152,6 +162,25 @@ export default{
           password: this.password,
           mobile: this.mobile
         })
+      }
+    },
+    onPasswordIconClick: function(){
+      this.passwordVisible = !this.passwordVisible
+    }
+  },
+  computed: {
+    passwordType: function(){
+      if (this.passwordVisible == true){
+        return "text"
+      }else {
+        return "password" 
+      }
+    },
+    passwordIcon: function(){
+      if (this.passwordVisible == false){
+        return "mdi-eye-off"
+      }else { 
+        return "mdi-eye" 
       }
     }
   }
