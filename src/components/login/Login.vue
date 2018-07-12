@@ -19,7 +19,7 @@
         <v-text-field
           id="password"
           name="password"
-          label="password"
+          label="PASSWORD"
           type="password"
           v-model="password"
           :rules="[rules.required]"

@@ -10,6 +10,7 @@
             id="userid"
             name="userid"
             label="ID"
+            placeholder="AMACS ユーザーIDを入力してさい"
             v-model="userid"
             :rules="useridRules"
           ></v-text-field>
