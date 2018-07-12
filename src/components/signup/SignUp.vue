@@ -104,7 +104,8 @@ export default{
       userid: '',
       useridRules: [
         v => !!v || 'useridは必須です',
-        v => /^[a-zA-Z0-9-_.]*$/.test(v) || 'useridには半角英数と-_.が使用できます'
+        v => /^[a-zA-Z0-9-_.]*$/.test(v) || 'useridには半角英数と-_.が使用できます',
+        v => v.length >= 6  || 'useridは6文字以上にしてください'
       ],
       username: '',
       usernameRules: [
@@ -113,12 +114,15 @@ export default{
       mobile: '',
       mobileRules: [
         v => !!v || '携帯電話番号は必須です',
-        v => /^[0-9]*$/.test(v) || '携帯電話番号はハイフンなしの半角数字で入力してください。'
+        v => /^[0-9]*$/.test(v) || '携帯電話番号はハイフンなしの半角数字で入力してください。',
+        v => v.length == 11  || '携帯電話番号は11桁にしてください'
       ],
       password: '',
       passwordRules: [
         v => !!v || 'passwordは必須です',
-        v => /^[a-zA-Z0-9-_.]*$/.test(v) || 'useridには半角英数と-_.が使用できます'
+        v => /^[a-zA-Z0-9-_.]*$/.test(v) || 'useridには半角英数と-_.が使用できます',
+        v => v.length >= 8  || 'passwordは8文字以上にしてください',
+        v => /([0-9].*[a-zA-Z]|[a-zA-Z].*[0-9])/.test(v) || 'passwordは半角英数字の組み合わせとしてください',
       ],
       passwordConfirm: '',
       passwordConfirmRules: [
