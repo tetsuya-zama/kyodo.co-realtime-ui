@@ -13,7 +13,7 @@
               v-if="allLocations.length > 0"
               :center="allLocations[0].position"
               :zoom="9"
-              map-type-id="terrain"
+              map-type-id="roadmap"
               style="width: auto; height: 300px"
             >
               <GmapMarker
