@@ -5,7 +5,6 @@
       <v-content>
         <router-view :bus='bus' :logon-user='logonUser' :user-setting='userSetting' />
       </v-content>
-      <Footer/>
     </v-app>
     <v-footer class="pa-3" light=true>
       <v-spacer></v-spacer>
