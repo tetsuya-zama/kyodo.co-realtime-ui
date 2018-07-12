@@ -44,7 +44,7 @@ class UserAPI {
     // サインアップ要求イベントのハンドリング
     this.bus.$on(USER.TRY_SIGNUP, newUser => this.signup(newUser))
     // ユーザ削除要求イベントのハンドリング
-    this.bus.$on(USER.TRY_DELETE, id => this.delete(id))
+    this.bus.$on(USER.TRY_DELETE, () => this.delete())
     
     // javascriptではコンストラクタのoverloadができないため
     // パラメータの有無で初期化の方針を判断する
@@ -118,15 +118,20 @@ class UserAPI {
   
     /**
    * ユーザ削除処理
-   * @param {String} id 入力されたユーザーID
    */
-  delete (id) {
-    axios.delete(process.env.ENDPOINT_BASE_URL + '/user', id)
+  delete () {
+    console.log(this.currentUser.userId)
+    axios.delete(process.env.ENDPOINT_BASE_URL + '/user/' + this.currentUser.userId, {
+        headers: {
+          Authorization: 'Bearer ' + this.currentUser.token
+        }
+      }
+    )
       .then(response => {
         if (response.status === 200) {
           this.bus.$emit(USER.DELETE_SUCCESS)
-          this.currentUser = null
-          this.bus.$emit(USER.LOGOUT)          
+//          this.currentUser = null
+//          this.bus.$emit(USER.LOGOUT)          
         }
       }).catch(() => {
         this.bus.$emit(USER.DELETE_FAILURE)
