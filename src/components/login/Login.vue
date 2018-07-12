@@ -10,6 +10,7 @@
           name="userid"
           label="ID"
           v-model="userid"
+          :rules="[rules.required]"
         ></v-text-field>
       </v-flex>
     </v-layout>
@@ -21,12 +22,14 @@
           label="password"
           type="password"
           v-model="password"
+          :rules="[rules.required]"
         ></v-text-field>
       </v-flex>
     </v-layout>
     <v-layout row>
       <v-flex xs12>
-        <v-btn block color="secondary" @click="tryLogin" dark>Login</v-btn>
+        <!--<v-btn depressed disabled block color="indigo" @click="tryLogin" dark >Login</v-btn>-->
+        <v-btn  block color="indigo" @click="tryLogin" :disabled="requiredCheck">Login</v-btn>
       </v-flex>
     </v-layout>
     <v-layout row>
@@ -54,7 +57,10 @@ export default {
     return {
       userid: '',
       password: '',
-      errorMessage: ''
+      errorMessage: '',
+      rules: {
+        required: value => !!value || '入力して下さい'
+      }
     }
   },
   created () {
@@ -71,6 +77,23 @@ export default {
     tryLogin () {
       this.bus.$emit(USER.TRY_LOGIN, this.userid, this.password)
     }
+  },
+   /**
+   * データバインドの前処理の定義
+   **/
+  computed: {
+     requiredCheck(){
+//       return this.btnDisable = false
+        // return alert("test")
+        // alert ()
+        if (this.userid != "" && this.password != ""){
+          return false
+        }else{
+          return true
+        }
+        
+    }
   }
+  
 }
 </script>

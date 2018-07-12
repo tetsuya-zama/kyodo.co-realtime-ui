@@ -5,6 +5,7 @@
       <v-content>
         <router-view :bus='bus' :logon-user='logonUser' :user-setting='userSetting' />
       </v-content>
+      <Footer/>
     </v-app>
     <v-footer class="pa-3" light=true>
       <v-spacer></v-spacer>
@@ -20,6 +21,7 @@ import {loadPositionAPI} from '@/apis/server/position'
 import USER from '@/events/user'
 import USERSETTING from '@/events/usersetting'
 import HeaderToolbar from '@/components/HeaderToolbar'
+import Footer from '@/components/Footer'
 
 /**
  * Event Busの作成
@@ -34,7 +36,7 @@ const bus = new Vue()
  */
 export default {
   name: 'App',
-  components: {HeaderToolbar},
+  components: {HeaderToolbar,Footer},
   data () {
     return {
       bus: bus,
