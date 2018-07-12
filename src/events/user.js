@@ -9,7 +9,10 @@ const USER = {
   LOGIN_FAILURE: 'user.login-failure', // ログイン失敗
   TRY_SIGNUP: 'user.try-signup', // サインアップ要求
   SIGNUP_SUCCESS: 'user.signup-success', // サインアップ成功
-  SIGNUP_FAILURE: 'user.signup-failure' // サインアップ失敗
+  SIGNUP_FAILURE: 'user.signup-failure', // サインアップ失敗
+  TRY_DELETE: 'user.try-delete', // ユーザ削除要求
+  DELETE_SUCCESS: 'user.delete-success', // ユーザ削除成功
+  DELETE_FAILURE: 'user.delete-failure' // ユーザ削除失敗
 }
 
 export default USER
