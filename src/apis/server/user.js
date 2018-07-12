@@ -130,11 +130,13 @@ class UserAPI {
       .then(response => {
         if (response.status === 200) {
           this.bus.$emit(USER.DELETE_SUCCESS)
-//          this.currentUser = null
-//          this.bus.$emit(USER.LOGOUT)          
+          this.currentUser = null
+          this.bus.$emit(USER.LOGOUT)          
+        console.log("deleteできたよ！！！")
         }
       }).catch(() => {
         this.bus.$emit(USER.DELETE_FAILURE)
+        console.log("deleteできてないよ！！！")
       })
   }
 }
