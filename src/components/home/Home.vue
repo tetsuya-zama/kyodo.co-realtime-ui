@@ -2,6 +2,7 @@
   <div>
     <MyLocation :bus='bus' :user-location='userLocation' :user-setting='userSetting' />
     <MemberLocations :bus='bus' :logon-user='logonUser' :user-location='userLocation' />
+    <MemberList :bus='bus' :user-location='userLocation' />
   </div>
 </template>
 
@@ -10,6 +11,7 @@ import USERLOCATION from '@/events/userlocation'
 import {loadUserLocationAPI} from '@/apis/client/userlocation'
 import MyLocation from './MyLocation'
 import MemberLocations from './MemberLocations'
+import MemberList from './MemberList'
 
 /**
  * Home Component
@@ -22,7 +24,7 @@ import MemberLocations from './MemberLocations'
 export default {
   name: 'Home',
   props: ['bus', 'logonUser', 'userSetting'],
-  components: {MyLocation, MemberLocations},
+  components: {MyLocation, MemberLocations, MemberList},
   data () {
     return {
       userLocation: null

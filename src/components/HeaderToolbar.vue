@@ -13,10 +13,16 @@
               <v-list-tile-title><v-icon>mdi-logout</v-icon>Logout</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
+          <v-list-tile  @click="onUnsubscribeClick">
+            <v-list-tile-content>
+              <v-list-tile-title><v-icon>mdi-delete-forever</v-icon>Unsubscribe</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
         </v-list>
       </v-menu>
     </v-toolbar-items>
   </v-toolbar>
+
 </template>
 
 <script>
@@ -38,6 +44,9 @@ export default {
   methods: {
     onLogoutClick: function () {
       this.bus.$emit(USER.TRY_LOGOUT)
+    },
+    onUnsubscribeClick: function () {
+      this.bus.$emit(USER.TRY_DELETE)
     }
   }
 }
