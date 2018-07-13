@@ -5,7 +5,11 @@
     class="elevation-1"
   >
     <template slot="items" slot-scope="row">
+    <!--  <td><a href="tel:row.item.mobile">row.item.mobile<v-icon>perm_phone_msg</v-icon></a></td> -->
+    <td><v-btn :href=row.item.tellCall><v-icon>perm_phone_msg</v-icon></v-btn> </td> 
       <td>{{ row.item.name }}</td>
+  <!--  <a href="tel:"+row.item.mobile>☎</a>  -->
+    <td>{{ row.item.mobile }}</td>
       <td>{{ row.item.position.lat }}</td>
       <td>{{ row.item.position.lng }}</td>
       <td>{{ row.item.address }}</td>
@@ -49,7 +53,13 @@ export default {
      * 表示すべき位置情報の前処理
      */
     allLocations: function () {
-      return this.locations
+      return this.locations.map(function (value) {
+        var tellCall="tel:"+value.mobile
+        // console.log(value)
+        // value.push({"tellCall":tellCall})
+        value["tellCall"]=tellCall
+        return value
+      })          
     }
   }
 }
