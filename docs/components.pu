@@ -36,6 +36,11 @@ package components{
         - @prop logonUser: Object
         - @prop userSetting: Object
         - @state userLocation: Object
+        - @state searchCondition: String
+      }
+      class SearchBox<<(C,lightgreen) Component>>{
+        - @prop bus: VueInstance
+        - @state searchCondition: String
       }
       class MyLocation<<(C,lightgreen) Component>>{
          - @prop bus: VueInstance
@@ -49,10 +54,19 @@ package components{
           - @prop bus: VueInstance
           - @prop logonUser: Object
           - @prop userLocation: Object
+          - @prop searchCondition: String
           - @state locations: Array
           ---
           + onRefresh(): void
           - allLocations():Array
+      }
+      class MemberList<<(C,lightgreen) Component>>{
+         - @prop bus: VueInstance
+         - @prop userLocation: Object
+         - @prop searchCondition: String
+         - @state locations: Array
+         ----
+         - allLocations():Array
       }
    }
    package loading{
@@ -171,6 +185,7 @@ package events{
    enum MEMBERLOCATIONS{
       UPDATED
       REFRESH
+      FILTER
    }
 }
 
@@ -201,8 +216,10 @@ Router .down.> Login
 Router .down.> SignUp
 Router .down.> Home
 
+Home .down.> SearchBox
 Home .down.> MyLocation
 Home .down.> MemberLocations
+Home .down.> MemberList
 Home ..> UserLocationAPI : initialize
 
 

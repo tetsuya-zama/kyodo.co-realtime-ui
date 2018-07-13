@@ -13,12 +13,25 @@
               v-if="allLocations.length > 0"
               :center="allLocations[0].position"
               :zoom="9"
-              map-type-id="terrain"
+              map-type-id="roadmap"
               style="width: auto; height: 300px"
             >
+              <!-- 自分のアイコン（indexの番号が0のとき）を青色、他を赤色（デフォルト）にする 
+                    FIXME やっぱりindexの番号が0のとき自分である、という判定方法は間違っているかもしれないので修正が必要-->
               <GmapMarker
-                :key="index"
                 v-for="(location, index) in allLocations"
+                v-if="index === 0"
+                :key="index"
+                :position="location.position"
+                :title="location.name + '(' + location.lastUpdate + ')'"
+                :label="location.name.substr(0,1)"
+                :icon='{scaledSize:{height:50,width:50},url:"https://maps.google.com/mapfiles/ms/icons/blue.png"} '
+                :clickable="true"
+                :draggable="false"
+              />
+              <GmapMarker
+                v-else
+                :key="index"
                 :position="location.position"
                 :title="location.name + '(' + location.lastUpdate + ')'"
                 :label="location.name.substr(0,1)"
@@ -46,11 +59,12 @@ import MEMBERLOCATIONS from '@/events/memberlocations'
  * @prop {VueInstance} bus Event Bus
  * @prop {Object} logonUser ログイン中のユーザー情報
  * @prop {Object} userLocation ログオンユーザーの位置情報
+ * @prop {String} searchCondition 検索条件値
  * @state {Array} locations マップ上に表示すべき位置情報
  */
 export default {
   name: 'MemberLocations',
-  props: ['bus', 'logonUser', 'userLocation'],
+  props: ['bus', 'logonUser', 'userLocation', 'searchCondition'],
   data: function () {
     return {
       locations: []
@@ -77,6 +91,9 @@ export default {
      * 表示すべき位置情報の前処理
      */
     allLocations: function () {
+      const filterLocations = this.locations.filter(location => {
+       return location.name.indexOf(this.searchCondition) > -1 || (location.address && location.address.indexOf(this.searchCondition)) > -1
+      })
       // TODO: サーバサイドAPIが未完成であるため暫定処理。完成したら直す。
       if (this.logonUser && this.userLocation) {
         const myLocation = {
@@ -88,10 +105,9 @@ export default {
           },
           lastUpdate: new Date(this.userLocation.timestamp).toLocaleString()
         }
-
-        return [myLocation].concat(this.locations.filter(l => l.userId !== this.logonUser.userId))
+        return [myLocation].concat(filterLocations.filter(l => l.userId !== this.logonUser.userId))
       } else {
-        return this.locations
+        return filterLocations
       }
     }
   }
