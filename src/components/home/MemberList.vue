@@ -1,17 +1,27 @@
 <template>
-  <v-data-table
-    :items="allLocations"
-    hide-actions
-    class="elevation-1"
-  >
-    <template slot="items" slot-scope="row">
-      <td><v-btn :href=row.item.tellCall><v-icon>perm_phone_msg</v-icon></v-btn></td>
-      <td>{{ row.item.name }}</td>
-      <td>{{ row.item.position.lat }}</td>
-      <td>{{ row.item.position.lng }}</td>
-      <td>{{ row.item.address }}</td>
+  <v-list two-line>
+    <template v-for="(item, index) in allLocations">
+      <v-divider
+        :inset="item.inset"
+        :key="index"
+      ></v-divider>
+
+      <v-list-tile
+        :key="item.title"
+        avatar
+      >
+        <v-list-tile-action>
+          <v-btn icon :href=item.tellCall><v-icon>perm_phone_msg</v-icon></v-btn>
+        </v-list-tile-action>
+
+
+        <v-list-tile-content>
+          <v-list-tile-title v-html="item.name"></v-list-tile-title>
+          <v-list-tile-sub-title v-html="item.address"></v-list-tile-sub-title>
+        </v-list-tile-content>
+      </v-list-tile>
     </template>
-  </v-data-table>
+    </v-list>
 </template>
 
 <script>
