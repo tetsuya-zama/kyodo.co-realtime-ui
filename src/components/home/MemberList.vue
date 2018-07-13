@@ -28,7 +28,7 @@ import MEMBERLOCATIONS from '@/events/memberlocations'
  */
 export default {
   name: 'MemberList',
-  props: ['bus', 'userLocation'],
+  props: ['bus', 'userLocation', 'searchCondition'],
   data: function () {
     return {
       locations: []
@@ -53,6 +53,8 @@ export default {
         var tellCall = 'tel:' + value.mobile
         value['tellCall'] = tellCall
         return value
+      }).filter(location => {
+        return  location.name.indexOf(this.searchCondition) > -1 || (location.address && location.address.indexOf(this.searchCondition)) > -1
       })
     }
   }

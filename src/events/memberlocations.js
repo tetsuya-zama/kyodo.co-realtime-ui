@@ -3,7 +3,8 @@
  */
 const MEMBERLOCATIONS = {
   UPDATED: 'memberlocations.updated', // 位置情報の更新
-  REFRESH: 'memberlocations.refresh' // 位置情報の再取得要求
+  REFRESH: 'memberlocations.refresh', // 位置情報の再取得要求
+  FILTER: 'memberlocations.filter' // ユーザーの絞り込み
 }
 
 export default MEMBERLOCATIONS

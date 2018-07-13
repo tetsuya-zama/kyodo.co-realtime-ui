@@ -59,11 +59,12 @@ import MEMBERLOCATIONS from '@/events/memberlocations'
  * @prop {VueInstance} bus Event Bus
  * @prop {Object} logonUser ログイン中のユーザー情報
  * @prop {Object} userLocation ログオンユーザーの位置情報
+ * @prop {String} searchCondition 検索条件値
  * @state {Array} locations マップ上に表示すべき位置情報
  */
 export default {
   name: 'MemberLocations',
-  props: ['bus', 'logonUser', 'userLocation'],
+  props: ['bus', 'logonUser', 'userLocation', 'searchCondition'],
   data: function () {
     return {
       locations: []
@@ -90,6 +91,9 @@ export default {
      * 表示すべき位置情報の前処理
      */
     allLocations: function () {
+      const filterLocations = this.locations.filter(location => {
+       return location.name.indexOf(this.searchCondition) > -1 || (location.address && location.address.indexOf(this.searchCondition)) > -1
+      })
       // TODO: サーバサイドAPIが未完成であるため暫定処理。完成したら直す。
       if (this.logonUser && this.userLocation) {
         const myLocation = {
@@ -101,10 +105,9 @@ export default {
           },
           lastUpdate: new Date(this.userLocation.timestamp).toLocaleString()
         }
-
-        return [myLocation].concat(this.locations.filter(l => l.userId !== this.logonUser.userId))
+        return [myLocation].concat(filterLocations.filter(l => l.userId !== this.logonUser.userId))
       } else {
-        return this.locations
+        return filterLocations
       }
     }
   }
